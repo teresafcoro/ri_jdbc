@@ -1,0 +1,21 @@
+UO263728
+María Teresa Fernández Coro
+
+Ampliación 2:
+– Gestión de nóminas.
+– Gestión de tipos de grupos profesionales.
+– Gestión de mecánicos ampliado.
+
+Comentarios:
+- uo.ri.cws.application.ui.manager.action.mechanicManagement.DeleteMechanicAction
+  Solicita al usuario el dni del mecánico, sin embargo, la signatura del método de la interfaz
+  uo.ri.cws.application.business.mechanic.MechanicService es
+  void deleteMechanic(String idMechanic) throws BusinessException;
+  Y los tests de la ampliación funcionan correctamente pasándole el id al método deleteMechanic.
+- uo.ri.cws.application.business.payroll.create.commands.GetAllPayrollsForMechanicTS
+  Recibe como parámetro del constructor el id del mecánico, sin embargo, para que los tests
+  de la ampliación funcionen correctamente necesito tratar dicho id como si fuese dni y 
+  hacer la siguiente llamada a la capa de persistencia
+  if (PersistenceFactory.forMechanic().findByDni(id).isEmpty())
+  en vez de
+  if (PersistenceFactory.forMechanic().findById(id).isEmpty())
